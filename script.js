@@ -14,8 +14,9 @@
 // getComputerChoice() 👉 'Rock'
 // getComputerChoice() 👉 'Scissors'
 function getComputerChoice() {
+    let options = ["Rock", "Paper", "Scissors"]
     let computerChoice = Math.floor(Math.random() * 3)
-    return computerChoice;
+    return options[computerChoice];
 }
 
 // console.log(getComputerChoice())
@@ -41,8 +42,6 @@ function getResult(playerChoice, computerChoice) {
 
 }
 
-// console.log(getResult("Scissors", "Rock"))
-
 // ** showResult updates the DOM to `You Win!` or `You Lose!` or `It's a Draw!` based on the score. Also shows Player Choice vs. Computer Choice**
 function showResult(score, playerChoice, computerChoice) {
 
@@ -55,7 +54,7 @@ function showResult(score, playerChoice, computerChoice) {
     
     let condi = score = 1 ? result.innerText = 'You Win!' : score = 2 ? result.innerText = 'You Lose!' : result.innerText = "It's a tie!"
     
-    result.innerText = `${condi}`
+    // result.innerText = `${condi}`
 
     computer.innerText = `You chose ${playerChoice} | Computer chose ${computerChoice}`
 
@@ -68,12 +67,17 @@ function showResult(score, playerChoice, computerChoice) {
 // ** Calculate who won and show it on the screen **
 function onClickRPS(playerChoice) {
 
+    const computerChoice = getComputerChoice()
+    const score = getResult(playerChoice.value, computerChoice)
+    showResult(score, playerChoice.value, computerChoice)
+
 }
 
 
 // ** Make the RPS buttons actively listen for a click and do something once a click is detected **
 function playGame() {
     // use querySelector to select all RPS Buttons
+    let buttons = document.querySelectorAll(".rpsButton")
 
     // * Adds an on click event listener to each RPS button and every time you click it, it calls the onClickRPS function with the RPS button that was last clicked *
 
@@ -82,7 +86,13 @@ function playGame() {
     // 3. Call the onClickRPS function every time someone clicks
     // 4. Make sure to pass the currently selected rps button as an argument
 
+    buttons.forEach(button => {
+        button.onclick = () => onClickRPS(button)
+    })
 
+    // Add a click listener to the end game button that runs the endGame() function on click
+    let endGameButton = document.getElementById('endGameButton')
+    endGameButton.onclick = () => endGame()
 
     // Add a click listener to the end game button that runs the endGame() function on click
 
